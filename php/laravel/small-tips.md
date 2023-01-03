@@ -3,6 +3,7 @@ Here you'll find small and concise but powerful tips. Feel free to explore them!
 
 - [Default password requirements](#default-password-requirements)
 - [Loop variable in Blade](#loop-variable-in-blade)
+- [Report to log long queries](#report-to-log-long-queries)
 
 ## Default password requirements
 > **Tags**: security, password, validation rule  
@@ -11,6 +12,7 @@ Here you'll find small and concise but powerful tips. Feel free to explore them!
 ```php
 // Add the configuration in a service provider
 // File: app/Providers/AppServiceProvider.php
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider
@@ -36,6 +38,7 @@ $request->validate([
 ]);
 ```
 **Note:** the `uncompromised()` method checks the password against a verification API to see if the password appears in data leaks. It uses the [NotPwnedVerifier](https://github.com/laravel/framework/blob/9.x/src/Illuminate/Validation/NotPwnedVerifier.php) implementation which checks password leaks using [Have I Been Pwned API](https://haveibeenpwned.com/API/v3). It was implemented in Laravel v8.39.
+
 
 ## Loop variable in Blade
 > **Tags**: blade, view, loop  
@@ -88,3 +91,45 @@ So now, for example you could add some styles using [Blade's conditional classes
 @endforeach
 ```
 
+
+## Report to log long queries
+> **Tags**: log, report, query
+
+If you want to log a query in case this query takes a long time to run, you can do it by listening to the Database. Also, if you want to listen for the cumulative time of the queries for current request, you can also do it.
+```php
+// Add the configuration in a service provider
+// File: app/Providers/AppServiceProvider.php
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Database\Connection;
+
+class AppServiceProvider
+{
+    public function boot(): void
+    {
+        // Log a warning if any query takes more than 1 second
+        DB::listen(function ($query) {
+            if ($query->time > 1000) {
+                Log::warning("Long query detected.", [
+                    'sql' => $query->sql,
+                    'duration' => $query->time,
+                ]);
+            }
+        });
+
+        // Log a warning if cumulative queries for active request take more than 5 seconds
+        DB::whenQueryingForLongerThan(5000, function (Connection $connection, QueryExecuted $event) {
+            Log::warning("Database queries exceeded 5 seconds", [
+                'name' => $connection->getName(),
+                'total_duration' => $connection->totalQueryDuration(),
+            ]);
+
+            // Or notify the development team...
+        });
+    }
+}
+```
+
+> **Note:** by default logs are saved into **storage/logs/laravel.log**
