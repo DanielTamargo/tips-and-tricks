@@ -1,9 +1,30 @@
 # Small tips
 Here you'll find small and concise but powerful tips. Feel free to explore them!  
 
+- [Override the orderBy defined in relationships (reorder)](#override-the-orderby-defined-in-relationships-reorder)
 - [Default password requirements](#default-password-requirements)
 - [Loop variable in Blade](#loop-variable-in-blade)
 - [Report to log long queries](#report-to-log-long-queries)
+
+## Override the orderBy defined in relationships (reorder)
+> **Tags**: eloquent, data, relationship, orm
+
+If you have a relationship between models you can define the orderBy rule that will sort the loaded data. But did you know you can override that orderBy whenever you need it?
+
+```php
+// Define the relationship in app\Models\User.php
+public function posts(): HasMany
+{
+    return $this->hasMany(Post::class)
+                ->orderBy('id', 'desc'); // <- will be the default orderBy
+}
+
+// Then load the user posts in the controller or view
+Auth::user()->posts()->get(); // <- use the default orderBy
+// Or
+Auth::user()->posts()->reorder('id', 'asc')->get(); // <- override the default orderBy
+```
+
 
 ## Default password requirements
 > **Tags**: security, password, validation rule  
