@@ -7,6 +7,8 @@ I just created this repository with the purpose to add one tip or trick each day
 
 - [php](php)
   - [Laravel](php/laravel)
+- [JavaScript](js)
+  - [Operators](js/operators.md)
 
 # Contributing
 **Contributing it's open for anyone!**  
