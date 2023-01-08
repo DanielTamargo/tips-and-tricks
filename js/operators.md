@@ -2,8 +2,12 @@
 
 There are many operators in JS and you don't have to memorize all of them, but it is really good to know the existence of them and how powerful they can be.  
 
-- [**\*\*=  ⬅ Exponentiation assignment**](#exponentiation-assignment)
-- [**||=  ⬅ Logical OR Assignment**](#logical-or-assignment)
+- Assignment operators
+  - Update variable if...
+    - [**||=  ⬅ Logical OR Assignment**](#logical-or-assignment)
+    - [**??=  ⬅ Logical Nullish Assignment**](#logical-nullish-assignment)
+  - Math-involved operators
+    - [**\*\*=  ⬅ Exponentiation assignment**](#exponentiation-assignment)
 
 
 ## Exponentiation assignment
@@ -62,4 +66,23 @@ d ||= 'new value!' // d value is: 'Hi!'
 false, 0, 0n, "", null, undefined, NaN
 ```
 Using this operator can be powerful, but you have to be aware about falsy and truthy values.  
-[Learn more about falsy values here.](https://www.freecodecamp.org/news/falsy-values-in-javascript/)
+[Learn more about falsy values here.](https://www.freecodecamp.org/news/falsy-values-in-javascript/)  
+If you want to update the variable's value only if the variable contains a nullish (null or undefined value), you can use the [logical nullish assignment operator](#logical-nullish-assignment)!
+
+
+## Logical Nullish Assignment
+Updates a variable with a new value only if that variable has a nullish value.  
+```js
+let a = null // Nullish value
+a ??= 'new value!' // a value is: 'new value!'
+
+let b = undefined // Nullish value
+b ??= 'new value!' // b value is: 'new value!'
+
+let c = 0 // Falsy value
+c ??= 'new value!' // c value is: 0
+
+let d = 'Hi!' // Truthy value
+d ??= 'new value!' // d value is: 'Hi!'
+```
+As we found out that when using [**logical or assignment operator**](#logical-or-assignment) you will assign a value to a variable **only if the variable holds a falsy value**. With the **logical nullish assignment operator** it's almost the same but **only with null or undefined**.
