@@ -6,6 +6,7 @@ Here you'll find small and concise but powerful tips. Feel free to explore them!
 - [Loop variable in Blade](#loop-variable-in-blade)
 - [Report to log long queries](#report-to-log-long-queries)
 - [Collection: Remove certain records by primary key](#remove-certain-records-by-primary-key-from-a-collection)
+- [OrderByRaw](#orderbyraw)
 
 ## Override the orderBy defined in relationships (reorder)
 > **Tags**: eloquent, data, relationship, orm
@@ -170,3 +171,17 @@ $posts->except([1, 2, 3]);
 ```
 
 [Found this method interesting? Check out the whole collection method list!](https://laravel.com/docs/9.x/collections#available-methods)
+
+
+## OrderByRaw
+> **Tags**: eloquent, query  
+
+You can order the results with `orderBy('column')`, but did you know you can use raw database sentences? This example created by [**Cosme Escobedo**](https://twitter.com/cosmeescobedo/status/1612492772367339529) shows **how to sort tasks by how long before the due date they were completed**.
+```php
+$tasks = Task::query()
+            ->whereNotNull('completed_at')
+            ->orderByRaw('due_at - completed_at DESC')
+            ->get();
+```
+
+The method [`orderByRaw`](https://laravel.com/docs/9.x/queries#orderbyraw) lets us the developers to order the data using more complex sentences than just order by a column.
