@@ -7,6 +7,7 @@ Here you'll find small and concise but powerful tips. Feel free to explore them!
 - [Report to log long queries](#report-to-log-long-queries)
 - [Collection: Remove certain records by primary key](#remove-certain-records-by-primary-key-from-a-collection)
 - [OrderByRaw](#orderbyraw)
+- [WhereIntegerInRaw](#whereintegerinraw)
 
 ## Override the orderBy defined in relationships (reorder)
 > **Tags**: eloquent, data, relationship, orm
@@ -174,7 +175,7 @@ $posts->except([1, 2, 3]);
 
 
 ## OrderByRaw
-> **Tags**: eloquent, query  
+> **Tags**: eloquent, query, raw sql  
 
 You can order the results with `orderBy('column')`, but did you know you can use raw database sentences? This example created by [**Cosme Escobedo**](https://twitter.com/cosmeescobedo/status/1612492772367339529) shows **how to sort tasks by how long before the due date they were completed**.
 ```php
@@ -185,3 +186,19 @@ $tasks = Task::query()
 ```
 
 The method [`orderByRaw`](https://laravel.com/docs/9.x/queries#orderbyraw) lets us the developers to order the data using more complex sentences than just order by a column.
+
+
+## WhereIntegerInRaw
+> **Tags**: eloquent, query, raw sql, performance  
+
+Another raw database sentence you can use in order to gain some sexy performance for your application is the methods **`whereIntegerInRaw`** and **`whereIntegerNotInRaw`**. This will be useful when you want to filter a query and the column holds integer values.
+```php
+// This way works fine
+Product::whereIn('id', range(1, 100))->get();
+
+// But this way has faster performance! ✅
+Product::WhereIntegerInRaw('id', range(1, 100))->get();
+```
+
+The official Laravel documentation points this out  
+![WhereIntegerInRaw performance boost](../../img/laravel/small-tips/001-whereIntegerInRaw.png)
