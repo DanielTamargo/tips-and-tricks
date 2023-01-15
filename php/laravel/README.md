@@ -2,6 +2,7 @@
 
 ## Laravel tips and tricks
 - [Concese but useful tips](./small-tips.md)
+- [Performance tips](./performance-tips.md)
 - [Cool macros 😎](./cool-macros.md)
 - [Route tips](./route-tips.md)
 
