@@ -8,6 +8,7 @@ Here you'll find small and concise but powerful tips. Feel free to explore them!
 - [Collection: Remove certain records by primary key](#remove-certain-records-by-primary-key-from-a-collection)
 - [OrderByRaw](#orderbyraw)
 - [WhereIntegerInRaw](#whereintegerinraw)
+- [Control your scheduled tasks](#control-your-scheduled-tasks)
 
 ## Override the orderBy defined in relationships (reorder)
 > **Tags**: eloquent, data, relationship, orm
@@ -202,3 +203,19 @@ Product::WhereIntegerInRaw('id', range(1, 100))->get();
 
 The official Laravel documentation points this out  
 ![WhereIntegerInRaw performance boost](../../img/laravel/small-tips/001-whereIntegerInRaw.png)
+
+
+## Control your scheduled tasks
+> **Tags**: schedule
+
+You can use **schedule** `onSuccess` and `onFailure` methods and execute 
+```php
+$schedule->command('notifications:send')
+    ->daily()
+    ->onSuccess(function () {
+        // Scheduled task failed...
+    })
+    ->onFailure(function () {
+        // Scheduled task failed...
+    })
+```
