@@ -1,7 +1,7 @@
 # Tips and tricks
 Multiple **tips and tricks** that can make the work easier when using different languages, frameworks or libraries.  
 
-I just created this repository with the purpose to add one tip or trick each day of this year and save them all together and use it as a personal dictionary.
+I just created this repository with the purpose to add one tip or trick (almost) every day of this year and save them all together and use it as a personal dictionary.
 
 # Index
 
