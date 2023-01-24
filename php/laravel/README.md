@@ -25,3 +25,4 @@ If you are familiar with Core PHP and Advanced PHP, Laravel will make your task 
 - [Povilas Korop](https://twitter.com/PovilasKorop), an amazing Laravel content creator
   - [Youtube channel with tutorials](https://www.youtube.com/c/LaravelDaily)
   - [Webpage with courses and posts (free and premium)](https://laraveldaily.com/)
+- [Battle Ready Laravel](https://battle-ready-laravel.com/) (39$ book) by [Ash Allen](https://twitter.com/AshAllenDesign)
